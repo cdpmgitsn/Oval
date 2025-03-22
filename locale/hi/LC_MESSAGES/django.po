@@ -1,0 +1,920 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-02 14:56+0500\n"
+"PO-Revision-Date: 2024-03-02 15:02+0500\n"
+"Last-Translator: Otabek Dushamov <dushamovotabek23@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Translated-Using: django-rosetta 0.9.9\n"
+
+#: .\apps\authentication\views.py:26
+msgid "Username or password is invalid"
+msgstr "उपयोगकर्ता नाम या पासवर्ड अमान्य है"
+
+#: .\apps\authentication\views.py:47 .\apps\trading\views.py:39
+msgid "This username is already taken"
+msgstr "यह उपयोगकर्ता नाम पहले ही ले लिया है"
+
+#: .\apps\authentication\views.py:95
+msgid "New password is sent to your email"
+msgstr "नया पासवर्ड आपके ईमेल पर भेजा जाता है"
+
+#: .\apps\authentication\views.py:98
+msgid "This email has not been registered"
+msgstr "यह ईमेल पंजीकृत नहीं किया गया है"
+
+#: .\apps\authentication\views.py:114
+msgid "Password is wrong"
+msgstr "पासवर्ड ग़लत है"
+
+#: .\apps\main\views.py:29
+msgid "You have exceeded the exchange limit"
+msgstr "आपने विनिमय सीमा पार कर ली है"
+
+#: .\apps\main\views.py:85
+msgid "Exchange is confirmed"
+msgstr "विनिमय की पुष्टि हो गई है"
+
+#: .\apps\notification\models.py:37
+msgid "New notification"
+msgstr "नई अधिसूचना"
+
+#: .\apps\notification\models.py:41
+msgid "Exchange request accepted"
+msgstr "विनिमय अनुरोध स्वीकार कर लिया गया"
+
+#: .\apps\notification\models.py:43
+msgid "Withdrawal request accepted"
+msgstr "निकासी अनुरोध स्वीकार कर लिया गया"
+
+#: .\apps\notification\models.py:45
+msgid "Money sent successfully"
+msgstr "पैसा सफलतापूर्वक भेजा गया"
+
+#: .\apps\notification\models.py:47
+msgid "Money received successfully"
+msgstr "धन सफलतापूर्वक प्राप्त हुआ"
+
+#: .\apps\notification\models.py:49
+msgid "Subscription activated"
+msgstr "सदस्यता सक्रिय"
+
+#: .\apps\notification\models.py:51
+msgid "Balance updated"
+msgstr "बैलेंस अपडेट किया गया"
+
+#: .\apps\notification\models.py:54
+msgid "Exchange request pending"
+msgstr "विनिमय अनुरोध लंबित है"
+
+#: .\apps\notification\models.py:56
+msgid "Withdrawal request pending"
+msgstr "निकासी अनुरोध लंबित है"
+
+#: .\apps\notification\models.py:58
+msgid "Money sending pending"
+msgstr "पैसा भेजना लंबित है"
+
+#: .\apps\notification\models.py:60
+msgid "Money receiving pending"
+msgstr "धन प्राप्ति लंबित है"
+
+#: .\apps\notification\models.py:62
+msgid "Subscription pending"
+msgstr "सदस्यता लंबित है"
+
+#: .\apps\notification\models.py:64
+msgid "Balance update pending"
+msgstr "शेष राशि अद्यतन लंबित है"
+
+#: .\apps\notification\models.py:67
+msgid "Exchange request denied"
+msgstr "विनिमय अनुरोध अस्वीकृत"
+
+#: .\apps\notification\models.py:69
+msgid "Withdrawal request denied"
+msgstr "निकासी अनुरोध अस्वीकृत"
+
+#: .\apps\notification\models.py:71
+msgid "Money sending denied"
+msgstr "पैसे भेजने से इनकार कर दिया गया"
+
+#: .\apps\notification\models.py:73
+msgid "Money receiving denied"
+msgstr "धन प्राप्ति से इनकार"
+
+#: .\apps\notification\models.py:75
+msgid "Subscription denied"
+msgstr "सदस्यता अस्वीकृत"
+
+#: .\apps\notification\models.py:77
+msgid "Balance update denied"
+msgstr "शेष अद्यतन अस्वीकृत"
+
+#: .\apps\trading\admin.py:20
+msgid "Personal info"
+msgstr "व्यक्तिगत जानकारी"
+
+#: .\apps\trading\admin.py:31
+msgid "Bot info"
+msgstr "बॉट जानकारी"
+
+#: .\apps\trading\admin.py:44
+msgid "Location"
+msgstr "जगह"
+
+#: .\apps\trading\admin.py:46
+msgid "Extra data"
+msgstr "अतिरिक्त डेटा"
+
+#: .\apps\trading\admin.py:57
+msgid "Important dates"
+msgstr "महत्वपूर्ण तिथियाँ"
+
+#: .\apps\trading\views.py:48
+msgid "New passwords are not the same"
+msgstr "नए पासवर्ड समान नहीं हैं"
+
+#: .\apps\trading\views.py:50
+msgid "Your old password is wrong"
+msgstr "आपका पुराना पासवर्ड ग़लत है"
+
+#: .\apps\trading\views.py:53
+msgid "In order to change password you have to fill all password fields"
+msgstr "पासवर्ड बदलने के लिए आपको सभी पासवर्ड फ़ील्ड भरने होंगे"
+
+#: .\apps\trading\views.py:55 .\apps\trading\views.py:79
+msgid "Profile successfully edited"
+msgstr "प्रोफ़ाइल सफलतापूर्वक संपादित की गई"
+
+#: .\apps\trading\views.py:69
+msgid "Image size exceeds the maximum allowed (20MB)."
+msgstr "छवि का आकार अधिकतम अनुमत (20एमबी) से अधिक है।"
+
+#: .\apps\trading\views.py:82
+msgid "Invalid image file. Please upload a valid image."
+msgstr "अमान्य छवि फ़ाइल. कृपया एक वैध छवि अपलोड करें."
+
+#: .\apps\trading\views.py:97
+msgid "This email is already taken"
+msgstr "इस ई - मेल को पहले से ही लिया गया है"
+
+#: .\apps\trading\views.py:165
+msgid "Card successfully created"
+msgstr "कार्ड सफलतापूर्वक बनाया गया"
+
+#: .\apps\trading\views.py:167
+msgid "Your maximum limit for adding cards is reached"
+msgstr "कार्ड जोड़ने की आपकी अधिकतम सीमा पूरी हो गई है"
+
+#: .\apps\trading\views.py:175
+msgid "Card successfully deleted"
+msgstr "कार्ड सफलतापूर्वक हटा दिया गया"
+
+#: .\apps\trading\views.py:237 .\apps\trading\views.py:313
+#: .\apps\trading\views.py:391
+msgid "Currency not found"
+msgstr "मुद्रा नहीं मिली"
+
+#: .\apps\trading\views.py:271
+msgid "You have exceeded the withdrawal limit"
+msgstr "आपने निकासी की सीमा पार कर ली है"
+
+#: .\apps\trading\views.py:294
+msgid "Withdraw is send to our managers"
+msgstr "निकासी हमारे प्रबंधकों को भेजी जाती है"
+
+#: .\apps\trading\views.py:311 .\apps\trading\views.py:389
+msgid "Insufficient funds in your balance to perform this operation ‼️"
+msgstr "इस ऑपरेशन को करने के लिए आपके शेष में अपर्याप्त धनराशि ‼️"
+
+#: .\apps\trading\views.py:342
+msgid "You have exceeded the sending limit"
+msgstr "आपने भेजने की सीमा पार कर ली है"
+
+#: .\apps\trading\views.py:371
+msgid "You successfully send money!"
+msgstr "आपने सफलतापूर्वक पैसे भेज दिए!"
+
+#: .\apps\trading\views.py:387
+msgid "Hash not found"
+msgstr "हैश नहीं मिला"
+
+#: .\apps\trading\views.py:642 .\apps\trading\views.py:711
+#: .\apps\trading\views.py:736 .\apps\trading\views.py:760
+msgid "30 seconds"
+msgstr "30 सेकंड"
+
+#: .\apps\trading\views.py:643
+msgid "Exchange"
+msgstr "अदला-बदली"
+
+#: .\apps\trading\views.py:687
+msgid "2 hours"
+msgstr "2 घंटे"
+
+#: .\apps\trading\views.py:688 .\templates\trading\wallet.html:164
+#: .\templates\trading\wallet.html:192
+msgid "Withdraw"
+msgstr "निकालना"
+
+#: .\apps\trading\views.py:712 .\templates\main\main.html:107
+#: .\templates\main\main.html:162 .\templates\main\main.html:218
+#: .\templates\trading\wallet.html:220 .\templates\trading\wallet.html:242
+msgid "Send"
+msgstr "भेजना"
+
+#: .\apps\trading\views.py:737
+msgid "Balance update"
+msgstr "शेष अद्यतन"
+
+#: .\apps\trading\views.py:761 .\templates\base.html:282
+msgid "Subscription"
+msgstr "अंशदान"
+
+#: .\config\settings.py:138 .\templates\base.html:170
+msgid "English"
+msgstr "अंग्रेज़ी"
+
+#: .\config\settings.py:139 .\templates\base.html:174
+msgid "Russian"
+msgstr "रूसी"
+
+#: .\config\settings.py:140 .\templates\base.html:178
+msgid "Uzbek"
+msgstr "उज़बेक"
+
+#: .\config\settings.py:141 .\templates\base.html:182
+msgid "German"
+msgstr "जर्मन"
+
+#: .\config\settings.py:142 .\templates\base.html:186
+msgid "Hindi"
+msgstr "हिंदी"
+
+#: .\templates\authentication\forgot_password.html:42
+msgid "Reset Password"
+msgstr "पासवर्ड रीसेट"
+
+#: .\templates\authentication\forgot_password.html:51
+#: .\templates\main\main.html:599 .\templates\main\main.html:653
+#: .\templates\main\main.html:707
+#: .\templates\trading\settings-profile.html:172
+msgid "Email"
+msgstr "ईमेल"
+
+#: .\templates\authentication\forgot_password.html:58 .\templates\base.html:92
+#: .\templates\trading\settings-payment-method.html:103
+#: .\templates\trading\settings-payment-method.html:135
+msgid "Submit"
+msgstr "जमा करना"
+
+#: .\templates\authentication\forgot_password.html:64
+msgid "Don't get code?"
+msgstr "कोड नहीं मिला?"
+
+#: .\templates\authentication\forgot_password.html:66
+msgid "Resend"
+msgstr "पुन: भेजें"
+
+#: .\templates\authentication\forgot_password.html:72
+#: .\templates\authentication\sign_in.html:74 .\templates\base.html:252
+#: .\templates\trading\wallet.html:151 .\templates\trading\wallet.html:207
+#: .\templates\trading\wallet.html:257
+msgid "Sign up"
+msgstr "साइन अप करें"
+
+#: .\templates\authentication\forgot_password.html:74
+msgid "or"
+msgstr "या"
+
+#: .\templates\authentication\forgot_password.html:76
+#: .\templates\authentication\sign_in.html:39
+#: .\templates\authentication\sign_in.html:67
+#: .\templates\authentication\sign_up.html:81 .\templates\base.html:248
+#: .\templates\trading\wallet.html:147 .\templates\trading\wallet.html:203
+#: .\templates\trading\wallet.html:253
+msgid "Sign in"
+msgstr "दाखिल करना"
+
+#: .\templates\authentication\sign_in.html:47
+#: .\templates\authentication\sign_up.html:47
+#: .\templates\trading\settings-profile.html:40
+#: .\templates\trading\settings-profile.html:41
+msgid "Username"
+msgstr "उपयोगकर्ता नाम"
+
+#: .\templates\authentication\sign_in.html:50
+#: .\templates\authentication\sign_up.html:50
+msgid "Password"
+msgstr "पासवर्ड"
+
+#: .\templates\authentication\sign_in.html:56
+msgid "Remember me"
+msgstr "मुझे याद करो"
+
+#: .\templates\authentication\sign_in.html:62
+msgid "Forgot Password"
+msgstr "पासवर्ड भूल गए"
+
+#: .\templates\authentication\sign_in.html:72
+msgid "Don't have an account?"
+msgstr "कोई खाता नहीं है?"
+
+#: .\templates\authentication\sign_in.html:81
+msgid "Have an issue with 2-factor authentication?"
+msgstr "2-कारक प्रमाणीकरण के साथ कोई समस्या है?"
+
+#: .\templates\authentication\sign_in.html:85
+#: .\templates\authentication\sign_up.html:66
+msgid "Privacy Policy"
+msgstr "गोपनीयता नीति"
+
+#: .\templates\authentication\sign_up.html:39
+msgid "Create your account"
+msgstr "अपना खाता बनाएं"
+
+#: .\templates\authentication\sign_up.html:59
+msgid ""
+"I certify that I am 18 years of age or older, and agree to\n"
+"                                            the"
+msgstr ""
+"मैं प्रमाणित करता हूं कि मेरी उम्र 18 वर्ष या उससे अधिक है और मैं इससे सहमत "
+"हूं"
+
+#: .\templates\authentication\sign_up.html:62
+msgid "User Agreement"
+msgstr "उपयोगकर्ता का समझौता"
+
+#: .\templates\authentication\sign_up.html:64
+msgid "and"
+msgstr "और"
+
+#: .\templates\authentication\sign_up.html:74
+msgid "Create account"
+msgstr "खाता बनाएं"
+
+#: .\templates\authentication\sign_up.html:83
+msgid "to your account"
+msgstr "आपके खाते में"
+
+#: .\templates\base.html:75
+msgid "Locked"
+msgstr "बंद"
+
+#: .\templates\base.html:85
+msgid "Enter Password"
+msgstr "पास वर्ड दर्ज करें"
+
+#: .\templates\base.html:95
+msgid "Sign out"
+msgstr "साइन आउट"
+
+#: .\templates\base.html:134 .\templates\notification\notifications.html:15
+msgid "Notifications"
+msgstr "सूचनाएं"
+
+#: .\templates\base.html:156
+msgid "More"
+msgstr "अधिक"
+
+#: .\templates\base.html:219 .\templates\main\main.html:38
+msgid "New user"
+msgstr "नए उपयोगकर्ता"
+
+#: .\templates\base.html:229 .\templates\base.html:287
+msgid "Settings"
+msgstr "समायोजन"
+
+#: .\templates\base.html:234 .\templates\trading\rate-templates.html:20
+msgid "Rate templates"
+msgstr "मुद्रा दर"
+
+#: .\templates\base.html:239
+msgid "Lock"
+msgstr "ताला"
+
+#: .\templates\base.html:243 .\templates\base.html:293
+msgid "Logout"
+msgstr "लॉग आउट"
+
+#: .\templates\base.html:272
+msgid "Home"
+msgstr "घर"
+
+#: .\templates\base.html:277 .\templates\main\main.html:361
+#: .\templates\main\main.html:382 .\templates\trading\wallet.html:29
+#: .\templates\trading\wallet.html:96 .\templates\trading\wallet.html:183
+msgid "Wallet"
+msgstr "बटुआ"
+
+#: .\templates\main\main.html:34
+msgid "Hi"
+msgstr "नमस्ते"
+
+#: .\templates\main\main.html:43
+msgid ""
+"\n"
+"                            Looks like you are not verified yet. Verify yourself to use\n"
+"                            the full potential of Tende.\n"
+"                            "
+msgstr ""
+
+#: .\templates\main\main.html:48
+msgid ""
+"\n"
+"                            Complete a quick and easy registration for full site access\n"
+"                            "
+msgstr ""
+"\n"
+"पूरी साइट तक पहुंच के लिए त्वरित और आसान पंजीकरण पूरा करें"
+
+#: .\templates\main\main.html:59 .\templates\main\main.html:64
+msgid "Register / Login"
+msgstr "लॉग इन रजिस्टर करें"
+
+#: .\templates\main\main.html:75
+msgid "Choose currency"
+msgstr "मुद्रा चुनिये"
+
+#: .\templates\main\main.html:82 .\templates\main\main.html:85
+msgid "Visit Telegram Bot"
+msgstr "टेलीग्राम बॉट पर जाएँ"
+
+#: .\templates\main\main.html:100
+msgid "Fiat to fiat currency"
+msgstr "फिएट से फिएट मुद्रा"
+
+#: .\templates\main\main.html:121 .\templates\main\main.html:176
+#: .\templates\main\main.html:232
+msgid "Receive"
+msgstr "प्राप्त करें"
+
+#: .\templates\main\main.html:126 .\templates\main\main.html:181
+#: .\templates\main\main.html:237
+#: .\templates\trading\settings-profile.html:140
+#: .\templates\trading\settings-profile.html:157
+msgid "Select"
+msgstr "चुनना"
+
+#: .\templates\main\main.html:141 .\templates\main\main.html:144
+#: .\templates\main\main.html:196 .\templates\main\main.html:199
+#: .\templates\main\main.html:252 .\templates\main\main.html:255
+msgid "Buy Now"
+msgstr "अभी खरीदें"
+
+#: .\templates\main\main.html:155
+msgid "Fiat to Crypto currency"
+msgstr "फिएट से लेकर क्रिप्टो करेंसी तक"
+
+#: .\templates\main\main.html:210
+msgid "Crypto to Fiat currency"
+msgstr "क्रिप्टो से फिएट मुद्रा"
+
+#: .\templates\main\main.html:266
+msgid "Exchange history"
+msgstr "विनिमय इतिहास"
+
+#: .\templates\main\main.html:275
+msgid "Type"
+msgstr "प्रकार"
+
+#: .\templates\main\main.html:278 .\templates\main\main.html:606
+#: .\templates\main\main.html:660 .\templates\main\main.html:714
+msgid "From"
+msgstr "से"
+
+#: .\templates\main\main.html:281 .\templates\main\main.html:614
+#: .\templates\main\main.html:668 .\templates\main\main.html:722
+msgid "To"
+msgstr "को"
+
+#: .\templates\main\main.html:284 .\templates\main\main.html:443
+#: .\templates\trading\bill.html:134 .\templates\trading\bill.html:182
+msgid "Fees"
+msgstr "फीस"
+
+#: .\templates\main\main.html:287 .\templates\main\main.html:324
+#: .\templates\main\main.html:364 .\templates\main\main.html:397
+#: .\templates\main\main.html:449 .\templates\main\main.html:479
+#: .\templates\main\main.html:527 .\templates\main\main.html:550
+msgid "Confirmed"
+msgstr "की पुष्टि"
+
+#: .\templates\main\main.html:290 .\templates\main\main.html:370
+#: .\templates\main\main.html:455 .\templates\main\main.html:533
+msgid "Date"
+msgstr "तारीख"
+
+#: .\templates\main\main.html:301
+msgid "Sold"
+msgstr "बिका हुआ"
+
+#: .\templates\main\main.html:306
+msgid "Buy"
+msgstr "खरीदना"
+
+#: .\templates\main\main.html:328 .\templates\main\main.html:401
+#: .\templates\main\main.html:483 .\templates\main\main.html:554
+msgid "Not confirmed"
+msgstr "पुष्टि नहीं"
+
+#: .\templates\main\main.html:346
+msgid "Balance top up history"
+msgstr "बैलेंस टॉप अप इतिहास"
+
+#: .\templates\main\main.html:355 .\templates\trading\bill.html:317
+#: .\templates\trading\bill.html:373
+msgid "Payment type"
+msgstr "भुगतान प्रकार"
+
+#: .\templates\main\main.html:358 .\templates\main\main.html:440
+#: .\templates\main\main.html:521 .\templates\trading\bill.html:164
+#: .\templates\trading\bill.html:298 .\templates\trading\bill.html:354
+#: .\templates\trading\rate-templates.html:60
+#: .\templates\trading\rate-templates.html:87
+#: .\templates\trading\rate-templates.html:123
+#: .\templates\trading\rate-templates.html:150
+msgid "Currency"
+msgstr "मुद्रा"
+
+#: .\templates\main\main.html:367 .\templates\main\main.html:408
+msgid "Paid"
+msgstr "चुकाया गया"
+
+#: .\templates\main\main.html:412
+msgid "Not paid"
+msgstr "भुगतान नहीं"
+
+#: .\templates\main\main.html:431
+msgid "Withdraw history"
+msgstr "इतिहास वापस ले लो"
+
+#: .\templates\main\main.html:446
+msgid "Credit card / wallet"
+msgstr "क्रेडिट कार्ड/वॉलेट"
+
+#: .\templates\main\main.html:452 .\templates\main\main.html:490
+#: .\templates\main\main.html:530 .\templates\main\main.html:561
+msgid "Accepted"
+msgstr "स्वीकृत"
+
+#: .\templates\main\main.html:494 .\templates\main\main.html:565
+msgid "Not accepted"
+msgstr "स्वीकार नहीं किया गया"
+
+#: .\templates\main\main.html:512
+msgid "Send history"
+msgstr "इतिहास भेजें"
+
+#: .\templates\main\main.html:524
+msgid "Receiver"
+msgstr "रिसीवर"
+
+#: .\templates\main\main.html:588 .\templates\main\main.html:642
+#: .\templates\main\main.html:696
+msgid "Confirmation"
+msgstr "पुष्टीकरण"
+
+#: .\templates\main\main.html:628 .\templates\main\main.html:682
+#: .\templates\main\main.html:736
+msgid "Confirm"
+msgstr "पुष्टि करना"
+
+#: .\templates\subscription\subscription.html:52
+msgid "Most popular"
+msgstr "सबसे लोकप्रिय"
+
+#: .\templates\subscription\subscription.html:60
+msgid "Start getting sales"
+msgstr "बिक्री प्राप्त करना प्रारंभ करें"
+
+#: .\templates\subscription\subscription.html:75
+msgid "Current"
+msgstr "मौजूदा"
+
+#: .\templates\subscription\subscription.html:79
+msgid "Upgrade"
+msgstr "उन्नत करना"
+
+#: .\templates\trading\bill.html:25
+msgid "Confirm order"
+msgstr "आदेश की पुष्टि"
+
+#: .\templates\trading\bill.html:33
+msgid "Order ID"
+msgstr "आदेश कामतत्व"
+
+#: .\templates\trading\bill.html:42
+msgid "Sender Hash"
+msgstr "प्रेषक हैश"
+
+#: .\templates\trading\bill.html:50
+msgid "Receiver Hash"
+msgstr "रिसीवर हैश"
+
+#: .\templates\trading\bill.html:59
+msgid "User Hash"
+msgstr "उपयोगकर्ता हैश"
+
+#: .\templates\trading\bill.html:71
+msgid "Currency from"
+msgstr "से मुद्रा"
+
+#: .\templates\trading\bill.html:79
+msgid "Currency to"
+msgstr "मुद्रा को"
+
+#: .\templates\trading\bill.html:89
+msgid "Initial amount from"
+msgstr "प्रारंभिक राशि से"
+
+#: .\templates\trading\bill.html:98
+msgid "Initial amount to"
+msgstr "आरंभिक राशि"
+
+#: .\templates\trading\bill.html:109
+msgid "Currency rate"
+msgstr "मुद्रा दर"
+
+#: .\templates\trading\bill.html:120 .\templates\trading\bill.html:217
+#: .\templates\trading\bill.html:255 .\templates\trading\bill.html:325
+#: .\templates\trading\bill.html:381
+msgid "Order time"
+msgstr "आदेश का समय"
+
+#: .\templates\trading\bill.html:142
+msgid "Amount from"
+msgstr "से राशि"
+
+#: .\templates\trading\bill.html:151
+msgid "Amount to"
+msgstr "राशि के लिए"
+
+#: .\templates\trading\bill.html:172
+msgid "Withdraw amount"
+msgstr "राशि वापस ले"
+
+#: .\templates\trading\bill.html:190
+msgid "Fee amount"
+msgstr "शुल्क राशि"
+
+#: .\templates\trading\bill.html:202
+msgid "Requisites"
+msgstr "आवश्यक वस्तुएँ"
+
+#: .\templates\trading\bill.html:229
+msgid "Receiving currency"
+msgstr "Währung empfangen"
+
+#: .\templates\trading\bill.html:231
+msgid "Send currency"
+msgstr "मुद्रा भेजें"
+
+#: .\templates\trading\bill.html:241
+msgid "Receiving amount"
+msgstr "Empfangsbetrag"
+
+#: .\templates\trading\bill.html:243
+msgid "Send amount"
+msgstr "राशि भेजें"
+
+#: .\templates\trading\bill.html:306
+#: .\templates\trading\rate-templates.html:68
+#: .\templates\trading\rate-templates.html:99
+#: .\templates\trading\rate-templates.html:131
+#: .\templates\trading\rate-templates.html:162
+#: .\templates\trading\wallet.html:92 .\templates\trading\wallet.html:179
+#: .\templates\trading\wallet.html:235
+msgid "Amount"
+msgstr "मात्रा"
+
+#: .\templates\trading\bill.html:336
+msgid "Subscription type"
+msgstr "सदस्यता प्रकार"
+
+#: .\templates\trading\bill.html:344
+msgid "Subscription period"
+msgstr "सदस्यता अवधि"
+
+#: .\templates\trading\bill.html:362
+msgid "Price"
+msgstr "कीमत"
+
+#: .\templates\trading\rate-templates.html:27
+msgid "Fiat currency"
+msgstr "फिएट मुद्रा"
+
+#: .\templates\trading\rate-templates.html:30
+msgid "Crypto currency"
+msgstr "क्रिप्टो करेंसी"
+
+#: .\templates\trading\rate-templates.html:49
+msgid "Fiat currencies"
+msgstr "फ़िएट मुद्राएँ"
+
+#: .\templates\trading\rate-templates.html:74
+#: .\templates\trading\rate-templates.html:137
+#: .\templates\trading\settings-profile.html:57
+#: .\templates\trading\settings-profile.html:109
+#: .\templates\trading\settings-profile.html:184
+msgid "Save"
+msgstr "बचाना"
+
+#: .\templates\trading\rate-templates.html:105
+#: .\templates\trading\rate-templates.html:168
+msgid "Edit"
+msgstr "संपादन करना"
+
+#: .\templates\trading\rate-templates.html:112
+msgid "Crypto currencies"
+msgstr "क्रिप्टो मुद्राएँ"
+
+#: .\templates\trading\settings-payment-method.html:12
+msgid "Add a payment method"
+msgstr "कोई भुगतान विधि जोड़ें"
+
+#: .\templates\trading\settings-payment-method.html:23
+msgid "Credit Card"
+msgstr "क्रेडिट कार्ड"
+
+#: .\templates\trading\settings-payment-method.html:28
+msgid "Verified"
+msgstr "सत्यापित"
+
+#: .\templates\trading\settings-payment-method.html:32
+msgid "Not Verified"
+msgstr "सत्यापित नहीं है"
+
+#: .\templates\trading\settings-payment-method.html:38
+msgid "Delete"
+msgstr "मिटाना"
+
+#: .\templates\trading\settings-payment-method.html:48
+msgid "Add New Card"
+msgstr "नया कार्ड जोड़ें"
+
+#: .\templates\trading\settings-payment-method.html:65
+msgid "Add card"
+msgstr "कार्ड जोड़ें"
+
+#: .\templates\trading\settings-payment-method.html:76
+msgid "Name on card"
+msgstr "कार्ड पर नाम"
+
+#: .\templates\trading\settings-payment-method.html:82
+msgid "Card number"
+msgstr "कार्ड संख्या"
+
+#: .\templates\trading\settings-payment-method.html:88
+msgid "Expiration"
+msgstr "समय सीमा समाप्ति"
+
+#: .\templates\trading\settings-payment-method.html:94
+msgid "CVC"
+msgstr "CVC"
+
+#: .\templates\trading\settings-payment-method.html:115
+msgid "Delete card"
+msgstr "कार्ड हटाएँ"
+
+#: .\templates\trading\settings-payment-method.html:126
+msgid "Are you sure you wanna delete this credit card"
+msgstr "क्या आप वाकई इस क्रेडिट कार्ड को हटाना चाहते हैं?"
+
+#: .\templates\trading\settings-profile.html:12
+msgid "User Profile"
+msgstr "उपयोगकर्ता रूपरेखा"
+
+#: .\templates\trading\settings-profile.html:21
+#: .\templates\trading\settings-profile.html:23
+#: .\templates\trading\wallet.html:238
+msgid "Hash"
+msgstr "हैश"
+
+#: .\templates\trading\settings-profile.html:32
+#: .\templates\trading\settings-profile.html:33
+msgid "First name"
+msgstr "पहला नाम"
+
+#: .\templates\trading\settings-profile.html:36
+#: .\templates\trading\settings-profile.html:37
+msgid "Last name"
+msgstr "उपनाम"
+
+#: .\templates\trading\settings-profile.html:44
+#: .\templates\trading\settings-profile.html:45
+msgid "Old password"
+msgstr "पुराना पासवर्ड"
+
+#: .\templates\trading\settings-profile.html:48
+#: .\templates\trading\settings-profile.html:49
+msgid "New password"
+msgstr "नया पासवर्ड"
+
+#: .\templates\trading\settings-profile.html:52
+#: .\templates\trading\settings-profile.html:53
+msgid "New password (again)"
+msgstr "नया पासवर्ड (दोबारा)"
+
+#: .\templates\trading\settings-profile.html:69
+msgid "User Media"
+msgstr "उपयोगकर्ता मीडिया"
+
+#: .\templates\trading\settings-profile.html:89
+msgid "Max file size is 20mb"
+msgstr "अधिकतम फ़ाइल आकार 20 एमबी है"
+
+#: .\templates\trading\settings-profile.html:99
+msgid "Choose file..."
+msgstr "फाइलें चुनें..."
+
+#: .\templates\trading\settings-profile.html:102
+msgid "Browse"
+msgstr "ब्राउज़"
+
+#: .\templates\trading\settings-profile.html:113
+msgid "Remove image"
+msgstr "छवि हटाएँ"
+
+#: .\templates\trading\settings-profile.html:126
+msgid "Personal Information"
+msgstr "व्यक्तिगत जानकारी"
+
+#: .\templates\trading\settings-profile.html:136
+msgid "Country"
+msgstr "देश"
+
+#: .\templates\trading\settings-profile.html:153
+msgid "City"
+msgstr "शहर"
+
+#: .\templates\trading\settings-profile.html:166
+#: .\templates\trading\settings-profile.html:168
+msgid "Address"
+msgstr "पता"
+
+#: .\templates\trading\settings-profile.html:178
+msgid "Date of birth"
+msgstr "जन्म की तारीख"
+
+#: .\templates\trading\settings.html:12 .\templates\trading\settings.html:22
+msgid "Profile"
+msgstr "प्रोफ़ाइल"
+
+#: .\templates\trading\settings.html:14 .\templates\trading\settings.html:25
+msgid "Payment Method"
+msgstr "भुगतान विधि"
+
+#: .\templates\trading\wallet.html:48 .\templates\trading\wallet.html:136
+msgid "Top up"
+msgstr "लबालब भरना"
+
+#: .\templates\trading\wallet.html:53
+msgid "Withdraw_"
+msgstr "निकालना"
+
+#: .\templates\trading\wallet.html:58
+msgid "Send_"
+msgstr "भेजना"
+
+#: .\templates\trading\wallet.html:77
+msgid "Top up balance"
+msgstr "टॉप अप बैलेंस"
+
+#: .\templates\trading\wallet.html:107
+msgid "Holder"
+msgstr "धारक"
+
+#: .\templates\trading\wallet.html:131
+msgid "Cancel"
+msgstr "रद्द करना"
+
+#: .\templates\trading\wallet.html:144 .\templates\trading\wallet.html:200
+#: .\templates\trading\wallet.html:250
+msgid "You have to sign in or sign up"
+msgstr "आपको साइन इन या साइन अप करना होगा"
+
+#: .\templates\trading\wallet.html:187
+msgid "Credit card"
+msgstr "क्रेडिट कार्ड"
+
+#, fuzzy
+#~ msgid "Send money"
+#~ msgstr "राशि भेजें"
+
+#, fuzzy
+#~ msgid "Receive money"
+#~ msgstr "प्राप्त करें"

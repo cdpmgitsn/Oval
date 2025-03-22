@@ -1,0 +1,98 @@
+.plan-list {
+    justify-content: space-evenly;
+}
+  
+.plan-item {
+    background-color: #fff;
+    box-shadow: 0 8px 20px rgba(34, 41, 57, 0.1);
+    padding: 50px 20px 40px;
+    border-radius: 10px;
+    transition: all 0.5s ease 0s;
+    border: 3px solid #fff;
+    position: relative;
+    margin-bottom: 20px;
+}
+.plan-item.current-plan.active {
+    border: 3px solid #7431e2;
+}
+.plan-item:hover {
+    border: 3px solid #7431e2;
+}
+  
+.plan-banner {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    transform: scale(0.9) rotate(-5deg);
+}
+  
+.banner-content {
+    background-color: rgb(252, 222, 63);
+    color: #7431e2;
+    padding: 2px 10px;
+    font-size: 13px;
+    border-radius: 5px;
+    font-weight: 700;
+}
+  
+.plan-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+  
+.plan-subtitle {
+    font-size: 16px;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+  
+.plan-price {
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+  
+.currency {
+    margin-top: 0;
+    font-size: 0.8em;
+    vertical-align: top;
+}
+  
+.integer {
+    margin-top: 0;
+    font-size: 1.5em;
+    transform: translate(0, -5px);
+}
+  
+.decimals {
+    margin-top: 0;
+    font-size: 0.8em;
+    vertical-align: top;
+}
+  
+.plan-btn {
+    margin-bottom: 15px;
+    background-color: #7431e2;
+}
+
+.plan-btn.current {
+    background-color: #909090;
+    border: none;
+}
+  
+.feature-item {
+    margin-bottom: 20px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+@media (min-width: 768px) {
+    .plan-item.current-plan.active {
+        transform: scale(1.1);
+    }
+    .plan-item:hover {
+        transform: scale(1.1);
+    }
+}
