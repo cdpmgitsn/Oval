@@ -1,0 +1,431 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>{{bill.bill_type}}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <!-- Roboto Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <!-- Bill CSS -->
+    <link rel="stylesheet" href="{% static 'css/bill.css' %}">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="bill">
+            <a href="{% url 'main' %}" class="bill-logo">
+                <img src="{{company.logo.url}}" alt="">
+            </a>
+            <div class="bill-container">
+                <div class="bill-head">
+                    <div class="bill-total">
+                       {% trans 'Confirm order' %}
+                    </div>
+                    <div class="bill-description">
+                        {{bill.bill_type}}
+                    </div>
+                    <div class="bill-devider"></div>
+                    <div class="bill-row">
+                        <div class="left">
+                            {% trans 'Order ID' %}
+                        </div>
+                        <div class="right">
+                            {{bill.id}}
+                        </div>
+                    </div>
+                    {% if bill_type == 'send' %}
+                    <div class="bill-row">
+                        <div class="left">
+                            {% trans 'Sender Hash' %}
+                        </div>
+                        <div class="right">
+                            {{bill.sender_hash}}
+                        </div>
+                    </div>
+                    <div class="bill-row">
+                        <div class="left">
+                            {% trans 'Receiver Hash' %}
+                        </div>
+                        <div class="right">
+                            {{bill.receiver_hash}}
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="bill-row">
+                        <div class="left">
+                            {% trans 'User Hash' %}
+                        </div>
+                        <div class="right">
+                            {{bill.hash}}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                {% if bill_type == 'exchange' %}
+                <div class="bill-section">
+                    <div class="bill-row">
+                        <div class="left">
+                            {% trans 'Currency from' %}
+                        </div>
+                        <div class="right bold">
+                            {{bill.currency_from}}
+                        </div>
+                    </div>
+                    <div class="bill-row">
+                        <div class="left">
+                            {% trans 'Currency to' %}
+                        </div>
+                        <div class="right bold">
+                            {{bill.currency_to}}
+                        </div>
+                    </div>
+                </div>
+                <div class="bill-section">
+                    <div class="bill-row">
+                        <div class="left">
+                            {% trans 'Initial amount from' %}
+                        </div>
+                        <div class="right bold">
+                            {{bill.initial_amount_1}}
+                            {{bill.currency_from}}
+                        </div>
+                    </div>
+                    <div class="bill-row">
+                        <div class="left">
+                            {% trans 'Initial amount to' %}
+                        </div>
+                        <div class="right bold">
+                            {{bill.initial_amount_2}}
+                            {{bill.currency_to}}
+                        </div>
+                    </div>
+                </div>
+                <div class="bill-section no-p">
+                    <div class="bill-row">
+                        <div class="left">
+                            {% trans 'Currency rate' %}
+                        </div>
+                        <div class="right bold">
+                            {{bill.rate}}
+                        </div>
+                    </div>
+                    <div class="bill-row"></div>
+                </div>
+                <div class="bill-section no-p">
+                    <div class="bill-row">
+                        <div class="left">
+                            {% trans 'Order time' %}
+                        </div>
+                        <div class="right bold">
+                            {{bill.time}}
+                        </div>
+                    </div>
+                    {% if bill.fees != 0 %}
+                    <div class="bill-row"></div>
+                    {% endif %}
+                </div>
+                {% if bill.fees != 0 %}
+                <div class="bill-section no-p">
+                    <div class="bill-row">
+                        <div class="left">
+                            {% trans 'Fees' %}
+                        </div>
+                        <div class="right bold">
+                            {{bill.fees}}%
+                        </div>
+                    </div>
+                    <div class="bill-row">
+                        <div class="left">
+                            {% trans 'Amount from' %}
+                        </div>
+                        <div class="right bold">
+                            {{bill.amount_1}}
+                            {{bill.currency_from}}
+                        </div>
+                    </div>
+                    <div class="bill-row">
+                        <div class="left">
+                            {% trans 'Amount to' %}
+                        </div>
+                        <div class="right bold">
+                            {{bill.amount_2}}
+                            {{bill.currency_to}}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% elif bill_type == 'withdraw' %}
+                <div class="bill-section">
+                    <div class="bill-row">
+                        <div class="left">
+                            {% trans 'Currency' %}
+                        </div>
+                        <div class="right bold">
+                            {{bill.currency}}
+                        </div>
+                    </div>
+                    <div class="bill-row">
+                        <div class="left">
+                            {% trans 'Withdraw amount' %}
+                        </div>
+                        <div class="right bold">
+                            {{bill.initial_amount}}
+                            {{bill.currency}}
+                        </div>
+                    </div>
+                    {% if bill.fees != 0 %}
+                    <div class="bill-row">
+                        <div class="left">
+                            {% trans 'Fees' %}
+                        </div>
+                        <div class="right bold">
+                            {{bill.fees}}%
+                        </div>
+                    </div>
+                    <div class="bill-row">
+                        <div class="left">
+                            {% trans 'Fee amount' %}
+                        </div>
+                        <div class="right bold">
+                            {{bill.fee_amount}}
+                            {{bill.currency}}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="bill-section no-p">
+                    <div class="bill-row">
+                        <div class="left">
+                            {% trans 'Requisites' %}
+                        </div>
+                        <div class="right bold">
+                            {% if bill.credit_card %}
+                            {{bill.credit_card}}
+                            {% elif bill.wallet %}
+                            {{bill.wallet}}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="bill-row"></div>
+                </div>
+                <div class="bill-section no-p">
+                    <div class="bill-row">
+                        <div class="left">
+                            {% trans 'Order time' %}
+                        </div>
+                        <div class="right bold">
+                            {{bill.time}}
+                        </div>
+                    </div>
+                </div>
+                {% elif bill_type == 'send' %}
+                <div class="bill-section">
+                    <div class="bill-row">
+                        <div class="left">
+                            {% if bill.viewer == 'receiver' %}
+                            {% trans 'Receiving currency' %}
+                            {% else %}
+                            {% trans 'Send currency' %}
+                            {% endif %}
+                        </div>
+                        <div class="right bold">
+                            {{bill.currency}}
+                        </div>
+                    </div>
+                    <div class="bill-row">
+                        <div class="left">
+                            {% if bill.viewer == 'receiver' %}
+                            {% trans 'Receiving amount' %}
+                            {% else %}
+                            {% trans 'Send amount' %}
+                            {% endif %}
+                        </div>
+                        <div class="right bold">
+                            {{bill.amount}}
+                            {{bill.currency}}
+                        </div>
+                    </div>
+                </div>
+                <div class="bill-section no-p">
+                    <div class="bill-row">
+                        <div class="left">
+                            {% trans 'Order time' %}
+                        </div>
+                        <div class="right bold">
+                            {{bill.time}}
+                        </div>
+                    </div>
+                </div>
+                {% if trader.hash_code == bill.receiver_hash %}
+                <div class="bill-section no-p">
+                    {% if bill.accepted %}
+                    <div class="btn btn-sm btn-success w-100">
+                        Accepted
+                    </div>
+                    {% elif bill.denied %}
+                    <div class="btn btn-sm btn-danger w-100">
+                        Denied
+                    </div>
+                    {% else %}
+                    <div class="btn-group w-100">
+                        <button type="submit" class="btn btn-sm btn-success w-100" form="accept_form">
+                            Accept
+                        </button>
+                        <button type="submit" class="btn btn-sm btn-danger w-100" form="deny_form">
+                            Deny
+                        </button>
+                    </div>
+                    <form method="post" id="accept_form">
+                        {% csrf_token %}
+                        <input type="text" name="type" value="send_accept" class="d-none">
+                        <input type="text" name="send_id" value="{{bill.id}}" class="d-none">
+                    </form>
+                    <form method="post" id="deny_form">
+                        {% csrf_token %}
+                        <input type="text" name="type" value="send_deny" class="d-none">
+                        <input type="text" name="send_id" value="{{bill.id}}" class="d-none">
+                    </form>
+                    {% endif %}
+                </div>
+                {% endif %}
+                {% elif bill_type == 'balance' %}
+                <div class="bill-section">
+                    <div class="bill-row">
+                        <div class="left">
+                            {% trans 'Currency' %}
+                        </div>
+                        <div class="right bold">
+                            {{bill.currency}}
+                        </div>
+                    </div>
+                    <div class="bill-row">
+                        <div class="left">
+                            {% trans 'Amount' %}
+                        </div>
+                        <div class="right bold">
+                            {{bill.amount}}
+                            {{bill.currency}}
+                        </div>
+                    </div>
+                </div>
+                <div class="bill-section no-p">
+                    <div class="bill-row">
+                        <div class="left">
+                            {% trans 'Payment type' %}
+                        </div>
+                        <div class="right bold">
+                            {{bill.payment_type}}
+                        </div>
+                    </div>
+                    <div class="bill-row">
+                        <div class="left">
+                            {% trans 'Order time' %}
+                        </div>
+                        <div class="right bold">
+                            {{bill.time}}
+                        </div>
+                    </div>
+                </div>
+                {% elif bill_type == 'subscription' %}
+                <div class="bill-section">
+                    <div class="bill-row">
+                        <div class="left">
+                            {% trans 'Subscription type' %}
+                        </div>
+                        <div class="right bold">
+                            Oval {{bill.subscription_type}}
+                        </div>
+                    </div>
+                    <div class="bill-row">
+                        <div class="left">
+                            {% trans 'Subscription period' %}
+                        </div>
+                        <div class="right bold">
+                            {{bill.subscription_period}}
+                        </div>
+                    </div>
+                </div>
+                <div class="bill-section">
+                    <div class="bill-row">
+                        <div class="left">
+                            {% trans 'Currency' %}
+                        </div>
+                        <div class="right bold">
+                            {{bill.currency}}
+                        </div>
+                    </div>
+                    <div class="bill-row">
+                        <div class="left">
+                            {% trans 'Price' %}
+                        </div>
+                        <div class="right bold">
+                            {{bill.price}}
+                            {{bill.currency}}
+                        </div>
+                    </div>
+                </div>
+                <div class="bill-section no-p">
+                    <div class="bill-row">
+                        <div class="left">
+                            {% trans 'Payment type' %}
+                        </div>
+                        <div class="right bold">
+                            {{bill.payment_type}}
+                        </div>
+                    </div>
+                    <div class="bill-row">
+                        <div class="left">
+                            {% trans 'Order time' %}
+                        </div>
+                        <div class="right bold">
+                            {{bill.time}}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% if 4 == 5 %}
+                <div class="bill-section no-p">
+                    <div class="bill-row">
+                        <div class="left">сумма</div>
+                        <div class="right bold">8 484 848 сум</div>
+                    </div>
+                    <div class="bill-row">
+                        <div class="left">комиссия <b>0.35%</b></div>
+                        <div class="right bold">29 696,96 сум</div>
+                    </div>
+                </div>
+                {% endif %}
+                <div class="bill-triangles">
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- <script src="js/script.js"></script>  -->
+</body>
+</html>

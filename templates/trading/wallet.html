@@ -1,0 +1,343 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+
+{% block styles %}
+<style>
+    .readonly-bg {
+        background-color: transparent !important;
+    }
+    .amount-input::-webkit-inner-spin-button,
+    .amount-input::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    .amount-input {
+        -moz-appearance: textfield; /* Firefox */
+    }
+</style>
+{% endblock %}
+
+
+{% block main %}
+<div class="row">
+    <div class="col-xxl-12 col-xl-12">
+        <div class="page-title">
+            <h4>
+                {% trans 'Wallet' %}
+            </h4>
+        </div>
+        <div class="row">
+            {% for item in balances %}
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            {{item.currency.name}}:
+                            <span style="font-weight: 300;">
+                                {{item.balance}}
+                                {{item.currency.symbol}}
+                            </span>
+                        </h5>
+                        <hr>
+                        <button type="button" class="btn btn-sm btn-primary mt-2" data-type="success" data-toggle="modal" data-target="#balance_modal_{{item.currency.id}}">
+                            <i class="fa fa-credit-card"></i>
+                            &nbsp;
+                            {% trans 'Top up' %}
+                        </button>
+                        <button type="button" class="btn btn-sm btn-primary mt-2" data-type="success" data-toggle="modal" data-target="#withdraw_modal_{{item.currency.id}}">
+                            <i class="fa fa-money-bill-transfer"></i>
+                            &nbsp;
+                            {% trans 'Withdraw_' %}
+                        </button>
+                        <button type="button" class="btn btn-sm btn-primary mt-2" data-type="success" data-toggle="modal" data-target="#send_modal_{{item.currency.id}}">
+                            <i class="fa fa-money-bill-trend-up"></i>
+                            &nbsp;
+                            {% trans 'Send_' %}
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block popups %}
+{% for item in balances %}
+<div class="modal fade" id="balance_modal_{{item.currency.id}}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    {% trans 'Top up balance' %}
+                </h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% if trader %}
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="text" name="type" value="top_up_balance" class="d-none">
+                    <input type="text" name="currency_id" value="{{item.currency.id}}" class="d-none">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <input type="text" value="{{item.currency.name}}" class="form-control readonly-bg" required readonly>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <input type="number" name="amount" placeholder="{% trans 'Amount' %}" class="form-control amount-input" required>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="input-group">
+                                <input type="text" value="{{item.currency.wallet}}" placeholder="{% trans 'Wallet' %}" class="form-control" disabled>
+                                <div class="input-group-append">
+                                    <div data-text="{{item.currency.wallet}}" class="btn h-100 d-flex align-items-center copy-button" style="background-color: #613de6;">
+                                        <i class="fa fa-copy"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% if item.currency.currency_type == 'fiat' %}
+                        <div class="col-md-12 mb-3">
+                            <div class="input-group">
+                                <input type="text" value="{{item.currency.holder}}" placeholder="{% trans 'Holder' %}" class="form-control" disabled>
+                                <div class="input-group-append">
+                                    <div data-text="{{item.currency.holder}}" class="btn h-100 d-flex align-items-center copy-button" style="background-color: #613de6;">
+                                        <i class="fa fa-copy"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        <div class="col-md-12 mb-3">
+                            <div class="form-file">
+                                <input type="file" name="bill" accept="image/*" class="form-file-input" id="customFile" required="">
+                                <label class="form-file-label" for="customFile">
+                                    <span class="form-file-text">
+                                        Upload the bill...
+                                    </span>
+                                    <span class="form-file-button">
+                                        Browse
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <button type="button" class="btn btn-primary w-100" data-dismiss="modal" aria-label="Close">
+                                {% trans 'Cancel' %}
+                            </button>
+                        </div>
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-primary w-100">
+                                {% trans 'Top up' %}
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                {% else %}
+                <div class="text-center">
+                    <h5>
+                        {% trans 'You have to sign in or sign up' %}
+                    </h5>
+                    <a href="{% url 'sign_in' %}" class="btn btn-primary">
+                        {% trans 'Sign in' %}
+                    </a>
+                    - or -
+                    <a href="{% url 'sign_up' %}" class="btn btn-primary">
+                        {% trans 'Sign up' %}
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="withdraw_modal_{{item.currency.id}}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    {% trans 'Withdraw' %}
+                </h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% if trader %}
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="text" name="type" value="withdraw" class="d-none">
+                    <input type="text" name="currency_id" value="{{item.currency.id}}" class="d-none">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <input type="text" value="{{item.currency.name}}" class="form-control readonly-bg" required readonly>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <input type="number" name="amount" placeholder="{% trans 'Amount' %}" class="form-control amount-input" required>
+                        </div>
+                        {% if item.currency.currency_type == 'crypto' %}
+                        <div class="col-md-12 mb-3">
+                            <input type="text" name="wallet" placeholder="{% trans 'Wallet' %}" class="form-control" required>
+                        </div>
+                        {% else %}
+                        <div class="col-md-12 mb-3">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text h-100">
+                                        {% trans 'My cards' %}
+                                    </div>
+                                </div>
+                                <select name="set_card" class="form-control" id="cardSelect">
+                                    <option value="">
+                                        {% trans 'Choose card' %}
+                                    </option>
+                                    {% for item in trader.credit_card_set.all %}
+                                    <option value="{{item.id}}">
+                                        {{item.name}} {{item.full_number}}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text h-100">
+                                        {% trans 'Card' %}
+                                    </div>
+                                </div>
+                                <input type="text" name="credit_card" placeholder="{% trans 'Credit card' %}" class="form-control" id="cardInput" required>
+                            </div>
+                        </div>
+                        {% endif %}
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-primary w-100">
+                                {% trans 'Withdraw' %}
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                {% else %}
+                <div class="text-center">
+                    <h5>
+                        {% trans 'You have to sign in or sign up' %}
+                    </h5>
+                    <a href="{% url 'sign_in' %}" class="btn btn-primary">
+                        {% trans 'Sign in' %}
+                    </a>
+                    - or -
+                    <a href="{% url 'sign_up' %}" class="btn btn-primary">
+                        {% trans 'Sign up' %}
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="send_modal_{{item.currency.id}}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    {% trans 'Send' %}
+                </h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% if trader %}
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="text" name="type" value="send" class="d-none">
+                    <input type="text" name="currency_id" value="{{item.currency.id}}" class="d-none">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <input type="text" value="{{item.currency.name}}" class="form-control readonly-bg" required readonly>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <input type="number" name="amount" placeholder="{% trans 'Amount' %}" class="form-control amount-input" required>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <input type="text" name="hash" placeholder="{% trans 'Hash' %}" class="form-control" required>
+                        </div>
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-primary w-100">
+                                {% trans 'Send' %}
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                {% else %}
+                <div class="text-center">
+                    <h5>
+                        {% trans 'You have to sign in or sign up' %}
+                    </h5>
+                    <a href="{% url 'sign_in' %}" class="btn btn-primary">
+                        {% trans 'Sign in' %}
+                    </a>
+                    - or -
+                    <a href="{% url 'sign_up' %}" class="btn btn-primary">
+                        {% trans 'Sign up' %}
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
+
+
+{% block scripts %}
+<script>
+    toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": false,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "1000",
+        "hideDuration": "1000",
+        "timeOut": "7000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get the select and input elements by their IDs
+        var cardSelect = document.getElementById('cardSelect');
+        var cardInput = document.getElementById('cardInput');
+
+        // Listen for changes on the select element
+        cardSelect.addEventListener('change', function() {
+            // Get the selected option's text
+            var selectedText = this.options[this.selectedIndex].text;
+
+            // Update the input's value with the selected option's text
+            cardInput.value = selectedText === "{% trans 'Choose card' %}" ? '' : selectedText; // Assuming you want to clear the input if the placeholder option is selected
+        });
+    });
+
+    $('.copy-button').click(function (event) {
+        let text = $(this).data('text')
+        navigator.clipboard.writeText(text)
+        .then(() => {
+            // Success message
+            toastr["success"]("Text copied to clipboard");
+        })
+        .catch(err => {
+            // Error message
+            console.error('Could not copy text: ', err);
+        });
+    })
+</script>
+{% endblock %}

@@ -1,0 +1,188 @@
+{% extends 'trading/settings.html' %}
+{% load static %}
+{% load i18n %}
+
+
+{% block settings_main %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header px-0">
+                <h4 class="card-title">
+                    {% trans 'Add a payment method' %}
+                </h4>
+            </div>
+            <div class="card-body px-0">
+                {% for item in trader.credit_card_set.all %}
+                <div class="verify-content">
+                    <div class="d-flex align-items-center">
+                        <span class="me-3 icon-circle bg-primary text-white"><i class="icofont-email"></i></span>
+                        <div class="primary-number">
+                            <p class="mb-0">{{item.card_type}}</p>
+                            <small>
+                                {% trans 'Credit Card' %} {{item.short_number}}
+                            </small>
+                            <br>
+                            {% if item.verified %}
+                            <span class="text-success">
+                                {% trans 'Verified' %}
+                            </span>
+                            {% else %}
+                            <span class="text-danger">
+                                {% trans 'Not Verified' %}
+                            </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <button class=" btn btn-outline-primary" data-toggle="modal" data-target="#delete_card_{{item.id}}">
+                        {% trans 'Delete' %}
+                    </button>
+                </div>
+                {% if not forloop.last %}
+                <hr class="dropdown-divider my-4">
+                {% endif %}
+                {% endfor %}
+
+                <div class="mt-5">
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addCard">
+                        {% trans 'Add New Card' %}
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block popups %}
+<div class="modal fade" id="addCard" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addCardLabel">
+                    {% trans 'Add card' %}
+                </h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" class="identity-upload" id="new_card_form" onsubmit="return validateForm()">
+                    {% csrf_token %}
+                    <input type="text" name="type" value="create" class="d-none">
+                    <div class="row g-3">
+                        <div class="col-xl-12">
+                            <label class="form-label">
+                                {% trans 'Name on card' %}
+                            </label>
+                            <input type="text" name="name" placeholder="Jannatul Maowa" class="form-control" required>
+                        </div>
+                        <div class="col-xl-12">
+                            <label class="form-label">
+                                {% trans 'Card number' %}
+                            </label>
+                            <input type="text" name="number" placeholder="5658 4258 6358 4756" minlength="19" maxlength="19" oninput="restrictToNumbers(event)" onblur="checkMinLength(this, 19)" class="form-control remove-input-arrows" id="creditCardInput" required>
+                        </div>
+                        <div class="col-xl-4">
+                            <label class="form-label">
+                                {% trans 'Expiration' %}
+                            </label>
+                            <input type="text" name="expiration_date" placeholder="10/2024" onblur="validateExpirationDate(this)" class="form-control" required>
+                        </div>
+                        <div class="col-xl-4">
+                            <label class="form-label">
+                                {% trans 'CVC' %}
+                            </label>
+                            <input type="text" name="cvv" placeholder="125" maxlength="4" oninput="restrictToNumbers(event)" class="form-control" required>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" form="new_card_form" class="btn btn-primary">
+                    {% trans 'Submit' %}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% for item in trader.credit_card_set.all %}
+<div class="modal fade" id="delete_card_{{item.id}}" tabindex="-2">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addCardLabel">
+                    {% trans 'Delete card' %}
+                </h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" class="identity-upload" id="delete_card_form_{{item.id}}">
+                    {% csrf_token %}
+                    <input type="text" name="type" value="delete" class="d-none">
+                    <input type="text" name="card_id" value="{{item.id}}" class="d-none">
+                    <div class="row g-3">
+                        <div class="col-xl-12">
+                            {% trans 'Are you sure you wanna delete this credit card' %}
+                            <br>
+                            {{item.short_number}}
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" form="delete_card_form_{{item.id}}" class="btn btn-primary">
+                    {% trans 'Submit' %}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
+
+
+{% block scripts %}
+<script>
+    function validateForm() {
+        const input = document.getElementById('creditCardInput');
+        if (input.value.length < 19) {
+            toastr['error']('Credit card number must be at least 16 characters long.');
+            return false; // Prevent form submission
+        }
+        return true; // Allow form submission
+    }
+    function checkMinLength(input, minLength) {
+        if (input.value.length < minLength) {
+            toastr['error']('Text must be at least ' + (minLength - 3) + ' characters long.')
+        }
+    }
+    function restrictToNumbers(event) {
+        const input = event.target;
+        input.value = input.value.replace(/[^0-9]/g, ''); // Remove non-numeric characters
+        input.value = input.value.replace(/(\d{4})/g, '$1 '); // Insert spaces every 4 charachters
+        input.value = input.value.trim();
+    }
+    function validateExpirationDate(input) {
+        const currentDate = new Date();
+        const currentYear = currentDate.getFullYear();
+        const currentMonth = currentDate.getMonth() + 1; // Months are zero-indexed
+
+        const enteredDate = input.value.split('/');
+        const enteredMonth = parseInt(enteredDate[0], 10);
+        const enteredYear = parseInt(enteredDate[1], 10);
+
+        if (
+            isNaN(enteredMonth) ||
+            isNaN(enteredYear) ||
+            enteredMonth < 1 ||
+            enteredMonth > 12 ||
+            enteredYear < currentYear ||
+            (enteredYear === currentYear && enteredMonth < currentMonth)
+        ) {
+            toastr['error']('Please enter a valid future expiration date.');
+            input.value = ''; // Optionally clear the input
+        }
+    }
+  </script>
+{% endblock %}

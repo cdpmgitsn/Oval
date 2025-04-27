@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+
+{% block styles %}
+{% endblock %}
+
+
+{% block main %}
+<div class="row pb-5" style="padding-bottom: 6rem !important;">
+    <div class="col-md-12">
+        <div class="page-title">
+            <h4>
+                {% trans 'Notifications' %}
+            </h4>
+        </div>
+    </div>
+    {% for item in notifications %}
+    <div class="col-md-4 col-sm-6 col">
+        <div class="notification dropdown">
+            <div class="dropdown-menu dropdown-menu-right notification-list show" style="position: static !important;">
+                <div class="lists">
+                    <a href="{{item.url}}" class="" style="justify-content: start;">
+                        <div class="d-flex align-items-center">
+                            {% if item.status == 'accepted' %}
+                            <span class="me-3 icon success"><i class="bi bi-check"></i></span>
+                            {% elif item.status == 'pending' %}
+                            <span class="me-3 icon pending"><i class="bi bi-exclamation-triangle"></i></span>
+                            {% elif item.status == 'denied' %}
+                            <span class="me-3 icon fail"><i class="bi bi-x"></i></span>
+                            {% endif %}
+                            <div>
+                                <p>{{item.message}}</p>
+                                <span>{{item.date}}</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+
+{% block popups %}
+{% endblock %}
+
+
+{% block scripts %}
+{% endblock %}

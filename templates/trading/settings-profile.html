@@ -1,0 +1,198 @@
+{% extends 'trading/settings.html' %}
+{% load static %}
+{% load i18n %}
+
+
+{% block settings_main %}
+<div class="row">
+    <div class="col-xxl-8 col-xl-8 col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">
+                    {% trans 'User Profile' %}
+                </h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="text" name="type" value="user-profile" class="d-none">
+                    <div class="row g-3">
+                        <div class="col-md-12">
+                            <label class="form-label">{% trans 'Hash' %}</label>
+                            <div class="input-group">
+                                <input type="text" value="{{trader.hash_code}}" placeholder="{% trans 'Hash' %}" class="form-control" readonly/>
+                                <div class="input-group-append">
+                                    <div id="copyButton" data-text="{{trader.hash_code}}" class="btn h-100 d-flex align-items-center" style="background-color: #613de6;">
+                                        <i class="fa fa-copy"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">{% trans 'First name' %}</label>
+                            <input type="text" name="first_name" value="{{trader.first_name}}" placeholder="{% trans 'First name' %}" class="form-control"/>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">{% trans 'Last name' %}</label>
+                            <input type="text" name="last_name" value="{{trader.last_name}}" placeholder="{% trans 'Last name' %}" class="form-control"/>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">{% trans 'Username' %}</label>
+                            <input type="text" name="username" value="{{trader.username}}" placeholder="{% trans 'Username' %}" class="form-control" required/>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">{% trans 'Old password' %}</label>
+                            <input type="password" name="old_password" placeholder="{% trans 'Old password' %}" class="form-control"/>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">{% trans 'New password' %}</label>
+                            <input type="password" name="new_password" placeholder="{% trans 'New password' %}" class="form-control"/>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">{% trans 'New password (again)' %}</label>
+                            <input type="password" name="new_password_again" placeholder="{% trans 'New password (again)' %}" class="form-control"/>
+                        </div>
+                        <div class="col-xxl-12">
+                            <button class="btn btn-success waves-effect">
+                                {% trans 'Save' %}
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-xxl-4 col-xl-4 col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">
+                    {% trans 'User Media' %}
+                </h4>
+            </div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="text" name="type" value="user-media" class="d-none">
+                    <div class="row g-3">
+                        <div class="col-xxl-12">
+                            <div class="d-flex align-items-center">
+                                <div style="width: 60px; height: 60px; margin-right: 20px;">
+                                    {% if trader.image %}
+                                    <img src="{{trader.image.url}}" class="me-3 rounded-circle me-0 me-sm-3" style="width: 100%; height: 100%; object-fit: cover;" />
+                                    {% else %}
+                                    <img src="{{company.profile_icon.url}}" class="me-3 rounded-circle me-0 me-sm-3" style="width: 100%; height: 100%; object-fit: cover;" />
+                                    {% endif %}
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="mb-0">{{trader}}</h4>
+                                    <p class="mb-0">
+                                        {% trans 'Max file size is 20mb' %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xxl-12">
+                            <div class="form-file">
+                                <input type="file" name="image" accept="image/*" class="form-file-input" id="customFile" required/>
+                                <label class="form-file-label" for="customFile">
+                                    <span class="form-file-text">
+                                        {% trans 'Choose file...' %}
+                                    </span>
+                                    <span class="form-file-button">
+                                        {% trans 'Browse' %}
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-success waves-effect">
+                                {% trans 'Save' %}
+                            </button>
+                            {% if trader.image %}
+                            <a href="{% url 'remove-image' %}" class="btn btn-danger waves-effect">
+                                {% trans 'Remove image' %}
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-xxl-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">
+                    {% trans 'Personal Information' %}
+                </h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="text" name="type" value="user-information" class="d-none">
+                    <div class="row g-4">
+                        <div class="col-xxl-4 col-xl-4 col-lg-4">
+                            <label class="form-label">
+                                {% trans 'Country' %}
+                            </label>
+                            <select class="form-select" name="country_id">
+                                <option value="">
+                                    {% trans 'Select' %}
+                                </option>
+                                {% for item in countries %}
+                                {% if item == trader.city.country %}
+                                <option value="{{item.id}}" selected>{{item}}</option>
+                                {% else %}
+                                <option value="{{item.id}}">{{item}}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-xxl-4 col-xl-4 col-lg-4">
+                            <label class="form-label">
+                                {% trans 'City' %}
+                            </label>
+                            <select class="form-select" name="city_id">
+                                <option value="">
+                                    {% trans 'Select' %}
+                                </option>
+                                {% if trader.city %}
+                                <option value="{{trader.city.id}}" selected>{{trader.city}}</option>
+                                {% endif %}
+                            </select>
+                        </div>
+                        <div class="col-xxl-4 col-xl-4 col-lg-4">
+                            <label class="form-label">
+                                {% trans 'Address' %}
+                            </label>
+                            <input type="text" name="address" value="{{trader.address}}" placeholder="{% trans 'Address' %}" class="form-control"/>
+                        </div>
+                        <div class="col-xxl-6 col-xl-6 col-lg-6">
+                            <label class="form-label">
+                                {% trans 'Email' %}
+                            </label>
+                            <input type="email" name="email" value="{{trader.email}}" placeholder="Hello@example.com" class="form-control"/>
+                        </div>
+                        <div class="col-xxl-6 col-xl-6 col-lg-6">
+                            <label class="form-label">
+                                {% trans 'Date of birth' %}
+                            </label>
+                            <input type="date" name="date_of_birth" value="{{trader.date_of_birth|date:'Y-m-d'}}" class="form-control"/>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-success pl-5 pr-5 waves-effect">
+                                {% trans 'Save' %}
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+<script src="{% static 'js/settings-profile.js' %}"></script>
+{% endblock %}

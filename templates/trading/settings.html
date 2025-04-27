@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+
+{% block main %}
+<div class="row">
+    <div class="col-xxl-12 col-xl-12">
+        <div class="page-title">
+            <h4>
+                {% if settings_page == 'profile' %}
+                {% trans 'Profile' %}
+                {% elif settings_page == 'payment' %}
+                {% trans 'Payment Method' %}
+                {% endif %}
+            </h4>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="settings-menu">
+                    <a href="{% url 'settings-profile' %}">
+                        {% trans 'Profile' %}
+                    </a>
+                    <a href="{% url 'settings-payment-method' %}">
+                        {% trans 'Payment Method' %}
+                    </a>
+                </div>
+            </div>
+            <div class="card-body">
+                {% block settings_main %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

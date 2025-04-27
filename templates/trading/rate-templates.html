@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+
+{% block styles %}
+<style>
+    .no-bg {
+        background-color: transparent !important;
+    }
+</style>
+{% endblock %}
+
+
+{% block main %}
+<div class="row">
+    <div class="col-xxl-12 col-xl-12">
+        <div class="page-title">
+            <h4>
+                {% trans 'Rate templates' %}
+            </h4>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="settings-menu">
+                    <a class="{% if currency_type == 'fiat' %}active{% endif %}" href="?currency_type=fiat">
+                        {% trans 'Fiat currency' %}
+                    </a>
+                    <a class="{% if currency_type == 'crypto' %}active{% endif %}" href="?currency_type=crypto">
+                        {% trans 'Crypto currency' %}
+                    </a>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="card m-0">
+                    <div class="card-header">
+                        <div class="settings-menu">
+                            {% for item in current_currencies %}
+                            <a class="mb-2 {% if item == current_currency %}active{% endif %}" href="?currency_type={{currency_type}}&currency_id={{item.id}}">
+                                {{item}}
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4>
+                                    {% trans 'Fiat currencies' %}
+                                </h4>
+                                <div class="input-group border mt-3">
+                                    <select name="" class="form-control">
+                                        <option value="">{{current_currency}}</option>
+                                    </select>
+                                    <input type="number" value="1" class="form-control no-bg" readonly>
+                                </div>
+                                <div class="input-group border mt-2">
+                                    <select name="currency_to_id" class="form-control" form="fiat_template_form" required>
+                                        <option value="">
+                                            {% trans 'Currency' %}
+                                        </option>
+                                        {% for item in fiat_currencies %}
+                                        {% if item != current_currency %}
+                                        <option value="{{item.id}}">{{item}}</option>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                    <input type="text" name="amount" placeholder="{% trans 'Amount' %}" class="form-control" form="fiat_template_form" required>
+                                </div>
+                                <form method="post" id="fiat_template_form" class="w-100">
+                                    {% csrf_token %}
+                                    <input type="text" name="currency_from_id" value="{{current_currency.id}}" class="d-none">
+                                    <button type="submit" class="btn btn-primary w-100 mt-2">
+                                        {% trans 'Save' %}
+                                    </button>
+                                </form>
+                                {% for template in fiat_templates %}
+                                <div class="input-group border mt-3">
+                                    <select name="" class="form-control">
+                                        <option value="">{{current_currency}}</option>
+                                    </select>
+                                    <input type="number" value="1" class="form-control no-bg" readonly>
+                                </div>
+                                <div class="input-group border mt-2">
+                                    <select name="currency_to_id" class="form-control" form="template_{{template.id}}_form">
+                                        <option value="">
+                                            {% trans 'Currency' %}
+                                        </option>
+                                        {% for item in fiat_currencies %}
+                                        {% if item != current_currency %}
+                                        {% if template.currency_to == item %}
+                                        <option value="{{item.id}}" selected>{{item}}</option>
+                                        {% else %}
+                                        <option value="{{item.id}}">{{item}}</option>
+                                        {% endif %}
+                                        {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                    <input type="text" name="amount" placeholder="{% trans 'Amount' %}" value="{{template.amount_format}}" class="form-control" form="template_{{template.id}}_form">
+                                </div>
+                                <form method="post" id="template_{{template.id}}_form" class="w-100">
+                                    {% csrf_token %}
+                                    <input type="text" name="template_id" value="{{template.id}}" class="d-none">
+                                    <button type="submit" class="btn btn-warning w-100 mt-2">
+                                        {% trans 'Edit' %}
+                                    </button>
+                                </form>
+                                {% endfor %}
+                            </div>
+                            <div class="col-md-6">
+                                <h4>
+                                    {% trans 'Crypto currencies' %}
+                                </h4>
+                                <div class="input-group border mt-3">
+                                    <select name="" class="form-control">
+                                        <option value="">{{current_currency}}</option>
+                                    </select>
+                                    <input type="number" value="1" class="form-control no-bg" readonly>
+                                </div>
+                                <div class="input-group border mt-2">
+                                    <select name="currency_to_id" class="form-control" form="crypto_template_form" required>
+                                        <option value="">
+                                            {% trans 'Currency' %}
+                                        </option>
+                                        {% for item in crypto_currencies %}
+                                        {% if item != current_currency %}
+                                        <option value="{{item.id}}">{{item}}</option>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                    <input type="text" name="amount" placeholder="{% trans 'Amount' %}" class="form-control" form="crypto_template_form" required>
+                                </div>
+                                <form method="post" id="crypto_template_form" class="w-100">
+                                    {% csrf_token %}
+                                    <input type="text" name="currency_from_id" value="{{current_currency.id}}" class="d-none">
+                                    <button type="submit" class="btn btn-primary w-100 mt-2">
+                                        {% trans 'Save' %}
+                                    </button>
+                                </form>
+                                {% for template in crypto_templates %}
+                                <div class="input-group border mt-3">
+                                    <select name="" class="form-control">
+                                        <option value="">{{current_currency}}</option>
+                                    </select>
+                                    <input type="number" value="1" class="form-control no-bg" readonly>
+                                </div>
+                                <div class="input-group border mt-2">
+                                    <select name="currency_to_id" class="form-control" form="template_{{template.id}}_form">
+                                        <option value="">
+                                            {% trans 'Currency' %}
+                                        </option>
+                                        {% for item in crypto_currencies %}
+                                        {% if item != current_currency %}
+                                        {% if template.currency_to == item %}
+                                        <option value="{{item.id}}" selected>{{item}}</option>
+                                        {% else %}
+                                        <option value="{{item.id}}">{{item}}</option>
+                                        {% endif %}
+                                        {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                    <input type="text" name="amount" placeholder="{% trans 'Amount' %}" value="{{template.amount_format}}" class="form-control" form="template_{{template.id}}_form">
+                                </div>
+                                <form method="post" id="template_{{template.id}}_form" class="w-100">
+                                    {% csrf_token %}
+                                    <input type="text" name="template_id" value="{{template.id}}" class="d-none">
+                                    <button type="submit" class="btn btn-warning w-100 mt-2">
+                                        {% trans 'Edit' %}
+                                    </button>
+                                </form>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

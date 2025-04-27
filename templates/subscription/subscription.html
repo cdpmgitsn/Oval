@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/subscription.css' %}">
+<style>
+    ::selection {
+        background-color: #7431e2; /* Change this to the desired background color */
+    }
+    .currency-select {
+        height: 38px;
+    }
+</style>
+{% endblock %}
+
+
+{% block main %}
+<div class="row">
+    <div class="col-md-2 mb-3">
+        <form method="get" id="filter_form">
+            <select name="currency_id" class="form-control currency-select" onchange="document.getElementById('filter_form').submit()">
+                {% for item in currencies %}
+                {% if item == current_currency %}
+                <option value="{{item.id}}" selected>{{item.name}}</option>
+                {% else %}
+                <option value="{{item.id}}">{{item.name}}</option>
+                {% endif %}
+                {% endfor %}
+            </select>
+            <input type="text" name="period_id" value="{{current_period.id}}" class="d-none">
+        </form>
+    </div>
+    <div class="col-md-10 mb-3">
+        {% for item in periods %}
+        {% if current_period == item %}
+        <a href="?currency_id={{current_currency.id}}&period_id={{item.id}}" class="btn btn-primary">{{item}}</a>
+        {% else %}
+        <a href="?currency_id={{current_currency.id}}&period_id={{item.id}}" class="btn btn-outline-primary">{{item}}</a>
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+<div class="row justify-content-center plan-list pt-5 pb-5">
+    {% for item in prices %}
+    <div class="col-md-4">
+        <div class="plan-item {% if item.subscription_type.is_popular %}current-plan active{% endif %}">
+            {% if item.subscription_type.is_popular %}
+            <div class="plan-banner">
+                <span class="banner-content">
+                    {% trans 'Most popular' %}
+                </span>
+            </div>
+            {% endif %}
+            <div class="plan-title">
+                {{item.subscription_type.new_name}}
+            </div>
+            <div class="plan-subtitle">
+                {% trans 'Start getting sales' %}
+            </div>
+            <div class="plan-price">
+                <span class="currency">
+                    {{item.price_details.currency}}
+                </span>
+                <span class="integer">
+                    {{item.price_details.integer}}
+                </span>
+                <span class="decimals">
+                    .{{item.price_details.decimals}}
+                </span>
+            </div>
+            {% if current_subscription == item.subscription_type.name %}
+            <div class="btn plan-btn current">
+                {% trans 'Current' %}
+            </div>
+            {% else %}
+            <div class="btn btn-primary plan-btn">
+                {% trans 'Upgrade' %}
+            </div>
+            {% endif %}
+            <div class="plan-features">
+                {% for feature in item.subscription_type.features %}
+                <div class="feature-item">
+                    <i class="fa fa-check"></i>
+                    &nbsp;
+                    {{feature.bold_name|safe}}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+
+{% block popups %}
+{% endblock %}
+
+
+{% block scripts %}
+<script src="{% static 'js/subscription.js' %}"></script>
+{% endblock %}

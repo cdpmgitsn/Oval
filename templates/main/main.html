@@ -1,0 +1,803 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+
+{% block styles %}
+<style>
+    .input-rem-padding {
+        padding: 0px 10px;
+    }
+    .border-to-td .bt tbody tr{
+        border-bottom: 1px solid #666;
+    }
+</style>
+{% endblock %}
+
+
+{% block main %}
+<div class="row">
+    <!-- Profile -->
+    <div class="col-xl-3">
+        <div id="profile-card" class="row">
+            <div class="col-xxl-12 col-xl-12 col-lg-6">
+                <div class="card welcome-profile">
+                    <div class="card-body">
+                        <div style="width: 60px; height: 60px;">
+                            {% if trader.image %}
+                            <img src="{{trader.image.url}}" style="width: 100%; height: 100%; object-fit: cover;" />
+                            {% else %}
+                            <img src="{{company.profile_icon.url}}" style="width: 100%; height: 100%; object-fit: cover;" />
+                            {% endif %}
+                        </div>
+                        <h4>
+                            {% trans 'Hi' %},
+                            {% if trader %}
+                            {{trader}}!
+                            {% else %}
+                            {% trans 'New user' %}
+                            {% endif %}
+                        </h4>
+                        <p>
+                            {% if trader %}
+                            {% blocktrans %}
+                            Looks like you are not verified yet. Verify yourself to use
+                            the full potential of Tende.
+                            {% endblocktrans %}
+                            {% else %}
+                            {% blocktrans %}
+                            Complete a quick and easy registration for full site access
+                            {% endblocktrans %}
+                            {% endif %}
+                        </p>
+
+                        <ul>
+                            <li>
+                                {% if trader %}
+                                <a href="#">
+                                    <span class="verified"><i class="icofont-check"></i></span>
+                                    {% trans 'Register / Login' %}
+                                </a>
+                                {% else %}
+                                <a href="{% url 'sign_in' %}">
+                                    <span class="not-verified"><i class="icofont-close-line"></i></span>
+                                    {% trans 'Register / Login' %}
+                                </a>
+                                {% endif %}
+                            </li>
+                            <li>
+                                <a href="#" class="currency-change-container">
+                                    {% if trader.choose_currency %}
+                                    <span class="verified"><i class="icofont-check"></i></span>
+                                    {% else %}
+                                    <span class="not-verified"><i class="icofont-close-line"></i></span>
+                                    {% endif %}
+                                    {% trans 'Choose currency' %}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{company.bot_url}}?start=trader_{{trader.id}}" target="_blank">
+                                    {% if trader.bot_user_id %}
+                                    <span class="verified"><i class="icofont-check"></i></span>
+                                    {% trans 'Visit Telegram Bot' %}
+                                    {% else %}
+                                    <span class="not-verified"><i class="icofont-close-line"></i></span>
+                                    {% trans 'Visit Telegram Bot' %}
+                                    {% endif %}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fiat to fiat -->
+    <div class="col-xl-3">
+        <div class="card animate-on-currency scroll-to-currency">
+            <div class="card-header">
+                <h4 class="card-title">
+                    {% trans 'Fiat to fiat currency' %}
+                </h4>
+            </div>
+            <div class="card-body">
+                <form class="row g-3" method="post">
+                    <div class="col-12">
+                        <label class="form-label">
+                            {% trans 'Send' %}
+                        </label>
+                        <div class="input-group">
+                            <select name="currency_from" data-currency-select="fiat2fiat1" class="form-control choose-currency-select" required>
+                                {% for item in fiat_currencies %}
+                                <option value="{{item.id}}">{{item}}</option>
+                                {% endfor %}
+                            </select>
+                            <input type="text" name="currency_amount" placeholder="$120" data-currency-input="fiat2fiat1" class="form-control" required/>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label">
+                            {% trans 'Receive' %}
+                        </label>
+                        <div class="input-group">
+                            <select name="currency_to" data-currency-select="fiat2fiat2" class="form-control choose-currency-select" required>
+                                <option value="">
+                                    {% trans 'Select' %}
+                                </option>
+                                {% for item in fiat_currencies %}
+                                <option value="{{item.id}}">{{item}}</option>
+                                {% endfor %}
+                            </select>
+                            <input type="text" name="currency_result" placeholder="€109" data-currency-input="fiat2fiat2" class="form-control input-rem-padding" readonly/>
+                        </div>
+                    </div>
+
+                    <p id="currency_result_1" class="mb-0">
+                        1 USD ~ 0,91388 EURO
+                    </p>
+
+                    <button type="button" class="btn btn-primary btn-block fiat-to-fiat-modal" data-type="error">
+                        {% trans 'Buy Now' %}
+                    </button>
+                    <button type="button" class="btn btn-primary btn-block fiat-to-fiat-modal d-none" data-type="success" data-toggle="modal" data-target="#FiatToFiatModal">
+                        {% trans 'Buy Now' %}
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Fiat to crypto -->
+    <div class="col-xl-3">
+        <div class="card animate-on-currency">
+            <div class="card-header">
+                <h4 class="card-title">
+                    {% trans 'Fiat to Crypto currency' %}
+                </h4>
+            </div>
+            <div class="card-body">
+                <form class="row g-3" method="post">
+                    <div class="col-12">
+                        <label class="form-label">
+                            {% trans 'Send' %}
+                        </label>
+                        <div class="input-group">
+                            <select name="currency_from" data-currency-select="fiat2crypto1" class="form-control choose-currency-select" required>
+                                {% for item in fiat_currencies %}
+                                <option value="{{item.id}}">{{item}}</option>
+                                {% endfor %}
+                            </select>
+                            <input type="text" name="currency_amount" data-currency-input="fiat2crypto1" class="form-control" placeholder="$214.22" required/>
+                        </div>
+                    </div>
+                    
+                    <div class="col-12">
+                        <label class="form-label">
+                            {% trans 'Receive' %}
+                        </label>
+                        <div class="input-group">
+                            <select name="currency_to" data-currency-select="fiat2crypto2" class="form-control choose-currency-select" required>
+                                <option value="">
+                                    {% trans 'Select' %}
+                                </option>
+                                {% for item in crypto_currencies %}
+                                <option value="{{item.id}}">{{item}}</option>
+                                {% endfor %}
+                            </select>
+                            <input type="text" name="currency_result" data-currency-input="fiat2crypto2" class="form-control" placeholder="0,005 BTC" readonly/>
+                        </div>
+                    </div>
+
+                    <p id="currency_result_2" class="mb-0">
+                        1 USD ~ 0,000023 BTC
+                    </p>
+
+                    <button type="button" class="btn btn-primary btn-block fiat-to-crypto-modal" data-type="error">
+                        {% trans 'Buy Now' %}
+                    </button>
+                    <button type="button" class="btn btn-primary btn-block fiat-to-crypto-modal d-none" data-type="success" data-toggle="modal" data-target="#FiatToCryptoModal">
+                        {% trans 'Buy Now' %}
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Crypto to fiat -->
+    <div class="col-xl-3">
+        <div class="card animate-on-currency">
+            <div class="card-header">
+                <h4 class="card-title">
+                    {% trans 'Crypto to Fiat currency' %}
+                </h4>
+            </div>
+            <div class="card-body">
+                <form class="row g-3" method="post">
+                    {% csrf_token %}
+                    <div class="col-12">
+                        <label class="form-label">
+                            {% trans 'Send' %}
+                        </label>
+                        <div class="input-group">
+                            <select name="currency_from" data-currency-select="crypto2fiat1" class="form-control choose-currency-select" required>
+                                {% for item in crypto_currencies %}
+                                <option value="{{item.id}}">{{item}}</option>
+                                {% endfor %}
+                            </select>
+                            <input type="text" name="currency_amount" data-currency-input="crypto2fiat1" class="form-control" placeholder="1 BTC" required/>
+                        </div>
+                    </div>
+                    
+                    <div class="col-12">
+                        <label class="form-label">
+                            {% trans 'Receive' %}
+                        </label>
+                        <div class="input-group">
+                            <select name="currency_to" data-currency-select="crypto2fiat2" class="form-control choose-currency-select" required>
+                                <option value="">
+                                    {% trans 'Select' %}
+                                </option>
+                                {% for item in fiat_currencies %}
+                                <option value="{{item.id}}">{{item}}</option>
+                                {% endfor %}
+                            </select>
+                            <input type="text" name="currency_result" data-currency-input="crypto2fiat2" class="form-control" placeholder="$42 857" readonly/>
+                        </div>
+                    </div>
+
+                    <p id="currency_result_3" class="mb-0">
+                        1 BTC ~ 42 857 USD
+                    </p>
+
+                    <button type="button" class="btn btn-primary btn-block crypto-to-fiat-modal" data-type="error">
+                        {% trans 'Buy Now' %}
+                    </button>
+                    <button type="button" class="btn btn-primary btn-block crypto-to-fiat-modal d-none" data-type="success" data-toggle="modal" data-target="#CryptoToFiatModal">
+                        {% trans 'Buy Now' %}
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Exchange history -->
+    <div class="col-xxl-12">
+        <div class="card border-to-td">
+            <div class="card-header">
+                <h4 class="card-title">
+                    {% trans 'Exchange history' %}
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped responsive-table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    {% trans 'Type' %}
+                                </th>
+                                <th>
+                                    {% trans 'From' %}
+                                </th>
+                                <th>
+                                    {% trans 'To' %}
+                                </th>
+                                <th>
+                                    {% trans 'Fees' %}
+                                </th>
+                                <th>
+                                    {% trans 'Confirmed' %}
+                                </th>
+                                <th>
+                                    {% trans 'Date' %}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for exchange in trader.exchange_set.all %}
+                            <tr>
+                                <td>
+                                    {% if exchange.exchange_type == 'sell' %}
+                                    <span class="danger-arrow">
+                                        <i class="bi bi-arrow-down-short"></i>
+                                        {% trans 'Sold' %}
+                                    </span>
+                                    {% elif exchange.exchange_type == 'buy' %}
+                                    <span class="success-arrow">
+                                        <i class="bi bi-arrow-up-short"></i>
+                                        {% trans 'Buy' %}
+                                    </span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <b>{{exchange.amount_input_format}}</b>
+                                    {{exchange.currency_from.name}}
+                                </td>
+                                <td>
+                                    <b>{{exchange.amount_output_format}}</b>
+                                    {{exchange.currency_to.name}}
+                                </td>
+                                <td>
+                                    {{exchange.pure_fees}} %
+                                </td>
+                                <td>
+                                    {% if exchange.confirmed %}
+                                    <span class="text-success">
+                                        {% trans 'Confirmed' %}
+                                    </span>
+                                    {% else %}
+                                    <span class="text-danger">
+                                        {% trans 'Not confirmed' %}
+                                    </span>
+                                    {% endif %}
+                                </td>
+                                <td>{{exchange.date}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Balance history -->
+    <div class="col-xxl-12">
+        <div class="card border-to-td">
+            <div class="card-header">
+                <h4 class="card-title">
+                    {% trans 'Balance top up history' %}
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped responsive-table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    {% trans 'Payment type' %}
+                                </th>
+                                <th>
+                                    {% trans 'Currency' %}
+                                </th>
+                                <th>
+                                    {% trans 'Wallet' %}
+                                </th>
+                                <th>
+                                    {% trans 'Confirmed' %}
+                                </th>
+                                <th>
+                                    {% trans 'Paid' %}
+                                </th>
+                                <th>
+                                    {% trans 'Date' %}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for balance in trader.balance_update_set.all %}
+                            {% if balance.payment_type or balance.currency_type == 'crypto' %}
+                            <tr>
+                                <td>
+                                    {% if balance.payment_type %}
+                                    {{balance.payment_type}}
+                                    {% else %}
+                                    {% trans 'Wallet' %}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <b>{{balance.amount_format}}</b>
+                                    {{balance.currency.name}}
+                                </td>
+                                <td>
+                                    {% if balance.wallet %}
+                                    {{balance.wallet}}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if balance.confirmed %}
+                                    <span class="text-success">
+                                        {% trans 'Confirmed' %}
+                                    </span>
+                                    {% else %}
+                                    <span class="text-danger">
+                                        {% trans 'Not confirmed' %}
+                                    </span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if balance.payed %}
+                                    <span class="text-success">
+                                        {% trans 'Paid' %}
+                                    </span>
+                                    {% else %}
+                                    <span class="text-danger">
+                                        {% trans 'Not paid' %}
+                                    </span>
+                                    {% endif %}
+                                </td>
+                                <td>{{balance.date}}</td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Withdraw history -->
+    <div class="col-xxl-12">
+        <div class="card border-to-td">
+            <div class="card-header">
+                <h4 class="card-title">
+                    {% trans 'Withdraw history' %}
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped responsive-table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    {% trans 'Currency' %}
+                                </th>
+                                <th>
+                                    {% trans 'Fees' %}
+                                </th>
+                                <th>
+                                    {% trans 'Credit card / wallet' %}
+                                </th>
+                                <th>
+                                    {% trans 'Confirmed' %}
+                                </th>
+                                <th>
+                                    {% trans 'Accepted' %}
+                                </th>
+                                <th>
+                                    {% trans 'Date' %}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for withdraw in trader.withdraw_set.all %}
+                            <tr>
+                                <td>
+                                    <b>{{withdraw.amount_format}}</b>
+                                    {{withdraw.currency.name}}
+                                </td>
+                                <td>
+                                    {{withdraw.pure_fees}} %
+                                </td>
+                                <td>
+                                    {% if credit_card %}
+                                    {{withdraw.credit_card}}
+                                    {% elif wallet %}
+                                    {{withdraw.wallet}}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if withdraw.confirmed %}
+                                    <span class="text-success">
+                                        {% trans 'Confirmed' %}
+                                    </span>
+                                    {% else %}
+                                    <span class="text-danger">
+                                        {% trans 'Not confirmed' %}
+                                    </span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if withdraw.accepted %}
+                                    <span class="text-success">
+                                        {% trans 'Accepted' %}
+                                    </span>
+                                    {% else %}
+                                    <span class="text-danger">
+                                        {% trans 'Not accepted' %}
+                                    </span>
+                                    {% endif %}
+                                </td>
+                                <td>{{withdraw.date}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Send history -->
+    <div class="col-xxl-12">
+        <div class="card border-to-td">
+            <div class="card-header">
+                <h4 class="card-title">
+                    {% trans 'Send history' %}
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped responsive-table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    {% trans 'Currency' %}
+                                </th>
+                                <th>
+                                    {% trans 'Receiver' %}
+                                </th>
+                                <th>
+                                    {% trans 'Confirmed' %}
+                                </th>
+                                <th>
+                                    {% trans 'Accepted' %}
+                                </th>
+                                <th>
+                                    {% trans 'Date' %}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for send in sends %}
+                            <tr>
+                                <td>
+                                    <b>{{send.amount_format}}</b>
+                                    {{send.currency.name}}
+                                </td>
+                                <td>
+                                    {{send.receiver}}
+                                </td>
+                                <td>
+                                    {% if send.confirmed %}
+                                    <span class="text-success">
+                                        {% trans 'Confirmed' %}
+                                    </span>
+                                    {% else %}
+                                    <span class="text-danger">
+                                        {% trans 'Not confirmed' %}
+                                    </span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if send.accepted %}
+                                    <span class="text-success">
+                                        {% trans 'Accepted' %}
+                                    </span>
+                                    {% else %}
+                                    <span class="text-danger">
+                                        {% trans 'Not accepted' %}
+                                    </span>
+                                    {% endif %}
+                                </td>
+                                <td>{{send.date}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block popups %}
+<div class="modal fade" id="FiatToFiatModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    {% trans 'Confirmation' %}
+                </h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <span class="text-primary">
+                                        {% trans 'Email' %}
+                                    </span>
+                                </td>
+                                <td><span class="text-primary">{{trader.email}}</span></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {% trans 'From' %}
+                                </td>
+                                <td>
+                                    <span id="fiat_to_fiat_currency_from_container"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {% trans 'To' %}
+                                </td>
+                                <td>
+                                    <span id="fiat_to_fiat_currency_to_container"></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-right f2f-form">
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="text" name="exchange_id" class="d-none">
+                        <button type="submit" class="btn btn-primary">
+                            {% trans 'Confirm' %}
+                        </button>
+                        <span class="f2f-link"></span>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="FiatToCryptoModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    {% trans 'Confirmation' %}
+                </h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <span class="text-primary">
+                                        {% trans 'Email' %}
+                                    </span>
+                                </td>
+                                <td><span class="text-primary">{{trader.email}}</span></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {% trans 'From' %}
+                                </td>
+                                <td>
+                                    <span id="fiat_to_crypto_currency_from_container"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {% trans 'To' %}
+                                </td>
+                                <td>
+                                    <span id="fiat_to_crypto_currency_to_container"></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-right f2c-form">
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="text" name="exchange_id" class="d-none">
+                        <button type="submit" class="btn btn-primary">
+                            {% trans 'Confirm' %}
+                        </button>
+                        <span class="f2c-link"></span>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="CryptoToFiatModal"> 
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    {% trans 'Confirmation' %}
+                </h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <span class="text-primary">
+                                        {% trans 'Email' %}
+                                    </span>
+                                </td>
+                                <td><span class="text-primary">{{trader.email}}</span></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {% trans 'From' %}
+                                </td>
+                                <td>
+                                    <span id="crypto_to_fiat_currency_from_container"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {% trans 'To' %}
+                                </td>
+                                <td>
+                                    <span id="crypto_to_fiat_currency_to_container"></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-right c2f-form">
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="text" name="exchange_id" class="d-none">
+                        <button type="submit" class="btn btn-primary">
+                            {% trans 'Confirm' %}
+                        </button>
+                        <span class="c2f-link"></span>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="WebToFiatModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmation</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td><span class="text-primary">Buyer Email</span></td>
+                                <td><span class="text-primary">buyer@example.com</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="text-primary">Seller Email</span></td>
+                                <td><span class="text-primary">seller@example.com</span></td>
+                            </tr>
+                            <tr>
+                                <td>Exchange Rate</td>
+                                <td>0.00212455 BTC</td>
+                            </tr>
+                            <tr>
+                                <td>Fee</td>
+                                <td>$28.00 USD</td>
+                            </tr>
+                            <tr>
+                                <td>Total</td>
+                                <td>$854.00 USD</td>
+                            </tr>
+                            <tr>
+                                <td>Vat</td>
+                                <td>
+                                    <div class="text-danger">$25.00 USD</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Sub Total</td>
+                                <td>$1232.00 USD</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-right">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal"
+                        data-target="#convertSuccessModal">
+                        Confirm
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+{% endblock %}
